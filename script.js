@@ -31,6 +31,14 @@ function renderJobs() {
         div.innerHTML = `
             <h3>${job.position}</h3>
             <p>${job.company}</p>
+
+            <button onclick="updateStatus(${job.id}, 'interview')">
+                Interview
+            </button>
+
+            <button onclick="updateStatus(${job.id}, 'rejected')">
+                Rejected
+            </button>
         `;
         jobsContainer.appendChild(div);
     });
@@ -42,5 +50,12 @@ document.querySelectorAll(".tab").forEach(button => {
         renderJobs();
     });
 });
+
+// Added interview and rejected toggle feature
+function updateStatus(id, status) {
+    const selectedJob = jobs.find(job => job.id === id);
+    selectedJob.status = status;
+    renderJobs();
+}
 
 renderJobs();
