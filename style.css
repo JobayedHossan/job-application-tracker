@@ -56,3 +56,36 @@ body {
 .hidden {
     display: none;
 }
+
+/*responsive design mobile */
+
+@media (max-width: 768px) {
+
+    /* Dashboard cards stacked */
+    .dashboard-cards {
+        flex-direction: column;
+    }
+
+    /* Header stacked */
+    .jobs-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* Tabs spacing */
+    .tab {
+        margin-bottom: 8px;
+    }
+
+    /* Reduce section padding */
+    .dashboard,
+    .jobs-section {
+        padding: 15px;
+    }
+
+    /* Cards full width */
+    .card {
+        width: 100%;
+    }
+}
