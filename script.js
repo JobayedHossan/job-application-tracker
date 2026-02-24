@@ -10,10 +10,12 @@ const jobs = [
     { id: 8, company: "Adobe", position: "QA Engineer", status: "all" }
 ];
 
-// implemented tab filtering functionality
-
+// DOM Elements
 const jobsContainer = document.getElementById("jobsContainer");
 const tabCount = document.getElementById("tabCount");
+const interviewCount = document.getElementById("interviewCount");
+const rejectedCount = document.getElementById("rejectedCount");
+const totalCount = document.getElementById("totalCount");
 
 let currentTab = "all";
 
@@ -41,7 +43,6 @@ function renderJobs() {
                 Rejected
             </button>
 
-            <!-- Delete Button Added -->
             <button onclick="deleteJob(${job.id})">
                 Delete
             </button>
@@ -49,33 +50,46 @@ function renderJobs() {
 
         jobsContainer.appendChild(div);
     });
+
+    // Update dashboard after rendering
+    updateDashboard();
 }
 
-document.querySelectorAll(".tab").forEach(button => {
-    button.addEventListener("click", () => {
-        currentTab = button.dataset.tab;
-        renderJobs();
-    });
-});
-
-// Added interview and rejected toggle feature
+// Toggle Feature
 function updateStatus(id, status) {
     const selectedJob = jobs.find(job => job.id === id);
     selectedJob.status = status;
     renderJobs();
 }
 
-// Implemented delete job functionality
+// Delete Feature
 function deleteJob(id) {
-
-    // Find job index
     const index = jobs.findIndex(job => job.id === id);
-
-    // Remove job from array
     jobs.splice(index, 1);
-
-    // Re-render UI
     renderJobs();
 }
+
+// ===== Dashboard Update Function =====
+function updateDashboard() {
+
+    // Count interview jobs
+    const interviewJobs = jobs.filter(job => job.status === "interview").length;
+
+    // Count rejected jobs
+    const rejectedJobs = jobs.filter(job => job.status === "rejected").length;
+
+    // Update UI
+    interviewCount.innerText = interviewJobs;
+    rejectedCount.innerText = rejectedJobs;
+    totalCount.innerText = jobs.length;
+}
+
+// Tab Switching
+document.querySelectorAll(".tab").forEach(button => {
+    button.addEventListener("click", () => {
+        currentTab = button.dataset.tab;
+        renderJobs();
+    });
+});
 
 renderJobs();
