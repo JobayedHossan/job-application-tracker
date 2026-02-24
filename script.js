@@ -28,6 +28,7 @@ function renderJobs() {
 
     filteredJobs.forEach(job => {
         const div = document.createElement("div");
+
         div.innerHTML = `
             <h3>${job.position}</h3>
             <p>${job.company}</p>
@@ -39,7 +40,13 @@ function renderJobs() {
             <button onclick="updateStatus(${job.id}, 'rejected')">
                 Rejected
             </button>
+
+            <!-- Delete Button Added -->
+            <button onclick="deleteJob(${job.id})">
+                Delete
+            </button>
         `;
+
         jobsContainer.appendChild(div);
     });
 }
@@ -55,6 +62,19 @@ document.querySelectorAll(".tab").forEach(button => {
 function updateStatus(id, status) {
     const selectedJob = jobs.find(job => job.id === id);
     selectedJob.status = status;
+    renderJobs();
+}
+
+// Implemented delete job functionality
+function deleteJob(id) {
+
+    // Find job index
+    const index = jobs.findIndex(job => job.id === id);
+
+    // Remove job from array
+    jobs.splice(index, 1);
+
+    // Re-render UI
     renderJobs();
 }
 
